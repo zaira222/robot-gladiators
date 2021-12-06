@@ -20,20 +20,27 @@ console.log(enemyNames [0]);
 console.log(enemyNames [1]); 
 console.log(enemyNames [2]);
 
+// function to generate a random numeric value
+var randomNumber = function(min, max) {
+  var value = Math.floor(Math.random() * (max - min + 1)) + min;
+
+  return value;
+};
+
 // create function
 var fight = function(enemyName) {
   // repeat and execute as long as the enemy-robot is alive 
   while(enemyHealth > 0) {
-    // place fight function code block here . . .
     // fight function statements 
 // Alert players that they are starting the round
-
   var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
 
 // if player choses to fight, then fight
 if (promptFight === "fight" || promptFight === "FIGHT") {
-    // remove enemy's health by subtracting the amount set in the playerAttack variable
-    enemyHealth = enemyHealth - playerAttack;
+    // generate random damage value based on player's attack power
+     var damage = randomNumber(playerAttack - 3, playerAttack);
+  // remove enemy's health by subtracting the amount set in the playerAttack variable
+    enemyHealth = Math.max(0, enemyHealth - damage);
     console.log(
       playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining."
     );
@@ -46,7 +53,8 @@ if (promptFight === "fight" || promptFight === "FIGHT") {
     }
   
     // remove player's health by subtracting the amount set in the enemyAttack variable
-    playerHealth = playerHealth - enemyAttack;
+    var damage = randomNumber(enemyAttack - 3, enemyAttack);
+    playerHealth = Math.max(0, playerHealth - damage);
     console.log(
       enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining."
     );
@@ -66,7 +74,7 @@ if (promptFight === "fight" || promptFight === "FIGHT") {
   if (confirmSkip) {
     window.alert(playerName + " has decided to skip this fight. Goodbye!");
     // subtract money from playerMoney for skipping
-    playerMoney = playerMoney - 2;
+    playerMoney = Math.max(0, playerMoney - 10);
   }
   // if no (false), ask question again by running fight() again
   else {
@@ -97,7 +105,7 @@ for (var i = 0; i < enemyNames.length; i++) {
    var pickedEnemyName = enemyNames[i];
 
    // reset enemyHealth before starting new fight
-   enemyHealth = 50;
+   enemyHealth = randomNumber(40,60);
 
    // use debugger to pause script from running and check what's going on at that moment in the code
    // debugger;
@@ -150,7 +158,7 @@ if (playAgainConfirm) {
 else { 
   window.alert("Thank you for playing Robot Gladiators! Come back soon!")
 }
-}
+};
 
 var shop = function() {
   // ask player what they'd like to do
@@ -172,7 +180,6 @@ var shop = function() {
      else { 
        window.alert("You don't have enough money!");
      }
-
      break;
      case "UPGRADE": // new case
      case "upgrade":
@@ -186,7 +193,6 @@ var shop = function() {
        else {
          window.alert("You don't have enough money!");
        }
-
        break;
        case "LEAVE": // new case
        case "leave":
